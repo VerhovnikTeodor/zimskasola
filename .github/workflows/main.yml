@@ -38,7 +38,7 @@ jobs:
           cache: maven
 
       - name: Build and test with Maven
-        run: mvn -B package --file pom.xml -Dquarkus.datasource.reactive.url=vertx-reactive:postgresql://localhost:5432/measdb
+        run: mvn -B package --file pom.xml -Dquarkus.datasource.reactive.url=jdbc:postgresql://localhost:5432/projekt
         working-directory: projekt
 
       - name: Upload resulting Build package
@@ -70,7 +70,7 @@ jobs:
           TAG_NAME: CD-${{ steps.date.outputs.date }}
 
       - name: Retag to latest
-        run: docker tag iideveloper21/measurements-qrks:$TAG_NAME iideveloper21/measurements-qrks:latest
+        run: docker tag teodorverhovnik/measurements-qrks:$TAG_NAME teodorverhovnik/measurements-qrks:latest
         env:
           TAG_NAME: CD-${{ steps.date.outputs.date }}
 
@@ -81,7 +81,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASS }}
 
       - name: Docker push
-        run: docker push iideveloper21/measurements-qrks:$TAG_NAME && docker push iideveloper21/measurements-qrks:latest
+        run: docker push teodorverhovnik/measurements-qrks:$TAG_NAME && docker push teodorverhovnik/measurements-qrks:latest
         env:
           TAG_NAME: CD-${{ steps.date.outputs.date }}
 
