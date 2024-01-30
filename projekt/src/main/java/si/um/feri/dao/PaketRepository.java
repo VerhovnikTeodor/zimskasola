@@ -6,5 +6,5 @@ import si.um.feri.vao.Paket;
 
 @ApplicationScoped
 public class PaketRepository implements PanacheRepository<Paket> {
-    // comment
+    // comment 2
 }
