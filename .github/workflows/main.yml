@@ -39,13 +39,13 @@ jobs:
 
       - name: Build and test with Maven
         run: mvn -B package --file pom.xml -Dquarkus.datasource.reactive.url=vertx-reactive:postgresql://localhost:5432/measdb
-        working-directory: backend
+        working-directory: projekt
 
       - name: Upload resulting Build package
         uses: actions/upload-artifact@v4
         with:
           name: Package
-          path: backend/target
+          path: projekt/target
   
   BE-docker-image-delivery:
     name: BE Docker Image Delivery
@@ -58,14 +58,14 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: Package
-          path: backend/target/
+          path: projekt/target/
 
       - name: Generate image tag
         id: date
         run: echo "::set-output name=date::$(date +%Y%m%d-%H%M%S)"
 
       - name: Docker build
-        run: docker build -t iideveloper21/measurements-qrks:$TAG_NAME -f backend/src/main/docker/Dockerfile.jvm ./backend
+        run: docker build -t iideveloper21/measurements-qrks:$TAG_NAME -f projekt/src/main/docker/Dockerfile.jvm ./projekt
         env:
           TAG_NAME: CD-${{ steps.date.outputs.date }}
 
